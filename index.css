@@ -1,0 +1,76 @@
+body {
+    background-color: rgb(255, 221, 0);
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+} 
+
+.container.calculator {
+    border: 3px solid black;
+    flex: 1;
+    max-width: 350px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
+
+div , button{
+    border-radius: 8px;
+}
+
+#result-screen {
+    background-color: white;
+    flex: 1;
+    max-height: 80px;
+    border: 3px solid black;
+    text-align: end;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.container{
+    flex: 1;
+}
+
+.container.buttons , .container .left , .container.bottom .right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container.top {
+    max-height: 75px;
+}
+
+.container.bottom , .button-row{
+    display: flex;
+    gap: 10px;
+}
+
+button{
+    flex: 1;
+    background-color: white;
+    font-size: 25px;
+}
+
+button.digit {
+    font-size: 30px;
+}
+
+button#operate {
+    min-height: 153px;
+    background-color: rgb(255, 221, 0);
+    border: 3px solid black;
+    font-size: 30px;
+}
+
+.container.bottom .right {
+    max-width: 80px;
+}
+
