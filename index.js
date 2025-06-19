@@ -34,8 +34,17 @@ function updateInputs(button) {
             populateToScreen();
             break;
         case 'control':
-            if(button.id === 'operate')
-                populateToScreen(true);
+            switch(button.id) {
+                case 'operate':
+                    populateToScreen(true);
+                    break;
+                case 'clear':
+                    clear();
+                    break;
+                case 'backspace':
+                    backspace();
+                    break;
+            };
             break;
     }
 }
@@ -44,6 +53,33 @@ function clear() {
     var1 = var2 = operator = '';
     screenResult.textContent = '';
     state = 'idle';
+}
+
+function backspace() {
+    switch(state) {
+        case '1stVar':
+            var1 =var1.slice(0,-1);
+            break;
+        case '2ndVar':
+            //if var2 empty change state to op and remove it
+            if(var2 === '') {
+                state = 'operator';
+                backspace();
+                return;
+            }    
+            var2 =var2.slice(0,-1);
+            break;
+        case 'operator':
+            if(operator === '') {
+                state = '1stVar';
+                backspace();
+                return;
+            }    
+            operator = operator.slice(0,-1);
+            break;
+    }
+    //then update screen too
+    screenResult.textContent = screenResult.textContent.slice(0,-1);
 }
 
 function assignNumber(number) {
