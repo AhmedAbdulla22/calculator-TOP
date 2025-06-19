@@ -11,6 +11,8 @@ const multiply = function(a,b) {
 };
 
 const divide = function(a,b) {
+    if(a === 0 || b === 0)
+        return 'invalid, can\'t divide on Zero!';
     return a/b;
 }
 
