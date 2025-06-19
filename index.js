@@ -3,7 +3,8 @@ let operator = '';
 let var1 = '0';
 let var2 = '';
 let state = "idle";
-const keyboardBtns = '0123456789-*/.+';
+const numBtns = '0123456789';
+const ctrlAndOpBtns = '-*/.+=';
 
 
 const buttonsContainer = document.querySelector('.container.buttons');
@@ -31,11 +32,11 @@ function updateInputs(button) {
             if(state === "result") {
                 clear();
             }
-            assignNumber(button.textContent);
+            assignNumber(button.dataset.key);
             populateToScreen();
             break;
         case 'op':
-            assignOperator(button.id);
+            assignOperator(button.dataset.key);
             populateToScreen();
             break;
         case 'control':
@@ -99,9 +100,11 @@ function addPeriod() {
     switch(state) {
         case 'idle': state = '1stVar';
         case '1stVar':
+            if(var1.includes('.')) return;
             var1 += '.';
             break;
         case '2ndVar':
+            if(var2.includes('.')) return;
             var2 += '.';
             break;
     }
@@ -169,13 +172,61 @@ buttonsContainer.addEventListener("click",(e) => {
     updateInputs(e.target);
 })
 
-// document.addEventListener("keydown", (e) => {
-//   const key = e.key;
-//   switch(key) {
-//     case '0':
-//         {
-//             const btn = document.querySelector('#0');
-//             btn.click();
-//         }
-//   }
-// });
+const backspaceBtn = document.querySelector('#backspace');
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Backspace') {
+    e.preventDefault(); // to not get back in browser 
+    if (backspaceBtn) backspaceBtn.click();
+  }
+});
+
+
+document.addEventListener("keydown", (e) => {
+  const key = e.key;
+
+  if(numBtns.includes(key)) {
+                const btn = document.querySelector(`#btn${key}`);
+                btn.click();     
+  }
+  else if(ctrlAndOpBtns.includes(key)) {
+    switch(key) {
+        case '.':
+            {
+                const btn = document.querySelector('#period');
+                btn.click();
+                break;
+            }
+        case '+':
+            {
+                const btn = document.querySelector('#addition');
+                btn.click();
+                break;
+            }
+        case '-':
+            {
+                const btn = document.querySelector('#subtraction');
+                btn.click();
+                break;
+            }
+        case '*':
+            {
+                const btn = document.querySelector('#muliply');
+                btn.click();
+                break;
+            }
+        case '/':
+            {
+                const btn = document.querySelector('#divise');
+                btn.click();
+                break;
+            }
+        case '=':
+            {
+                const btn = document.querySelector('#operate');
+                btn.click();
+                break;
+            }
+    }
+  }
+});
