@@ -1,13 +1,15 @@
 import {operate} from './operations.js';
 let operator = '';
-let var1 = '';
+let var1 = '0';
 let var2 = '';
 let state = "idle";
+const keyboardBtns = '0123456789-*/.+';
 
 
 const buttonsContainer = document.querySelector('.container.buttons');
 const screenResult = document.querySelector('.screen.result');
 
+populateToScreen();
 
 function populateToScreen(toOperate = false,toUseResultAfterward = false) {
     if(toOperate && (state === '2ndVar' || toUseResultAfterward)) {
@@ -60,8 +62,9 @@ function updateInputs(button) {
 }
 
 function clear() {
-    var1 = var2 = operator = '';
-    screenResult.textContent = '';
+    var1 = '0';
+    var2 = operator = '';
+    screenResult.textContent = '0';
     state = 'idle';
 }
 
@@ -94,6 +97,7 @@ function backspace() {
 
 function addPeriod() {
     switch(state) {
+        case 'idle': state = '1stVar';
         case '1stVar':
             var1 += '.';
             break;
@@ -128,7 +132,11 @@ function changePlusMinus() {
 
 function assignNumber(number) {
     //update States
-    if(state === 'idle') state = '1stVar';
+    if(state === 'idle' && number === '0') return; //fix 0 problem when idle
+    if(state === 'idle') {
+        state = '1stVar';
+        var1 = '';
+    }
     else if(state === 'operator') state = '2ndVar';
 
     switch(state) {
@@ -160,3 +168,14 @@ buttonsContainer.addEventListener("click",(e) => {
     if(e.target.tagName !== "BUTTON") return;
     updateInputs(e.target);
 })
+
+// document.addEventListener("keydown", (e) => {
+//   const key = e.key;
+//   switch(key) {
+//     case '0':
+//         {
+//             const btn = document.querySelector('#0');
+//             btn.click();
+//         }
+//   }
+// });

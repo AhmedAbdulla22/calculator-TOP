@@ -1,12 +1,12 @@
 body {
     background-color: rgb(255, 221, 0);
     color: black;
-    font-family: Arial, Helvetica, sans-serif;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif;
 } 
 
 .container.calculator {
@@ -57,6 +57,8 @@ button{
     flex: 1;
     background-color: white;
     font-size: 25px;
+    font-weight: 800;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 button.digit {
