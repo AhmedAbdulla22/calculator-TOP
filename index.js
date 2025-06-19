@@ -9,14 +9,17 @@ const buttonsContainer = document.querySelector('.container.buttons');
 const screenResult = document.querySelector('.screen.result');
 
 
-function populateToScreen(toOperate = false) {
-    if(toOperate && state === '2ndVar') {
+function populateToScreen(toOperate = false,toUseResultAfterward = false) {
+    if(toOperate && (state === '2ndVar' || toUseResultAfterward)) {
         screenResult.innerText = operate(parseFloat(var1),parseFloat(var2),operator);
-        state = 'result';
+        state = (toUseResultAfterward) ? '2ndVar':'result';
+        return;
     }
-    else {
-        screenResult.textContent = var1 + operator + var2;
+    else if (toOperate && state === 'result') {
+        return;
     }
+
+    screenResult.textContent = var1 + operator + var2;
 }
 
 function updateInputs(button) {
@@ -139,8 +142,16 @@ function assignNumber(number) {
 }
 
 function assignOperator(op) {
-    if(state !== "1stVar") return;
-    console.log(op);
+    if(state === '2ndVar' || state === 'result') {
+        populateToScreen(true,true);
+        const result = screenResult.textContent;
+        clear();
+        var1 = (parseFloat(result)) ? result: '0';
+        state = '1stVar'; 
+    }
+
+    if(state === "idle") return;
+    
     operator = op;
     state = 'operator';
 }
