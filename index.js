@@ -10,8 +10,8 @@ const screenResult = document.querySelector('.screen.result');
 
 
 function populateToScreen(toOperate = false) {
-    if(toOperate) {
-        screenResult.innerText = operate(parseInt(var1),parseInt(var2),operator);
+    if(toOperate && state === '2ndVar') {
+        screenResult.innerText = operate(parseFloat(var1),parseFloat(var2),operator);
         state = 'result';
     }
     else {
@@ -44,6 +44,13 @@ function updateInputs(button) {
                 case 'backspace':
                     backspace();
                     break;
+                case 'period':
+                    addPeriod();
+                    populateToScreen();
+                    break;
+                case 'plus/minus':
+                    changePlusMinus();
+                    populateToScreen();
             };
             break;
     }
@@ -80,6 +87,40 @@ function backspace() {
     }
     //then update screen too
     screenResult.textContent = screenResult.textContent.slice(0,-1);
+} 
+
+function addPeriod() {
+    switch(state) {
+        case '1stVar':
+            var1 += '.';
+            break;
+        case '2ndVar':
+            var2 += '.';
+            break;
+    }
+}
+
+function changePlusMinus() {
+    switch(state) {
+        case '1stVar':
+            if(!var1.includes('-'))
+                var1 = '-' + var1;
+            else
+                var1 = var1.slice(1);
+            break;
+        case '2ndVar':
+            if(operator === '-')
+                operator = '+';
+            else if(operator === '+') {
+                operator = '-';
+            } else {
+                if(!var2.includes('-'))
+                    var2 = '(-' + var2 + ')';
+                else
+                    var2 = var2.slice(2,-1);
+            }
+            break;
+    }
 }
 
 function assignNumber(number) {
