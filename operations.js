@@ -6,15 +6,15 @@ const subtract = function(a,b) {
     return a - b;
 };
 
-const multiply = function(numbers) {
-    return numbers.reduce((result,number) => result * number);
+const multiply = function(a,b) {
+    return a * b;
 };
 
 const divide = function(a,b) {
     return a/b;
 }
 
-const operate = function (a,b,operator) {
+export const operate = function (a,b,operator) {
     switch(operator) {
         case '+':
             return add(a,b);
@@ -27,11 +27,4 @@ const operate = function (a,b,operator) {
         default: 
             return "invalid operator!";
     }
-}
-
-module.exports = {
-    add,
-    subtract,
-    multiply,
-    divide
 }
